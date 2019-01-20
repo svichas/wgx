@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Graph</title>
+</head>
+<body>
+	<script type="text/javascript" src="../dist/wgx.js"></script>
+	<script type="text/javascript">
+
+        var game = new wgx(800, 500);
+
+        // ball
+        var bar_height = 80;
+
+        var ball = game.vector(game.canvas_width/2, game.canvas_height/2);
+        var vx = -1,
+            vy = 1;
+        var speed = 5;
+
+        var bar1 = game.vector(10, 0);
+        var bar2 = game.vector(game.canvas_width-20, (game.canvas_height/2)-bar_height/2);
+
+        game.tick(function() {
+
+            game.background("#000");
+
+            // draw bars
+            game.fill("white");
+            game.rect(bar1.x, bar1.y, 10, bar_height);
+            game.rect(bar2.x, bar2.y, 10, bar_height);
+
+            game.fill("red");
+            game.circle(ball.x, ball.y, 10);
+
+            ball.x += speed * vx;
+            ball.y += speed * vy;
+
+            // collision
+            if (ball.x >= bar1.x && ball.x <= bar1.x + 10
+                && ball.y >= bar1.y && ball.y <= bar1.y + bar_height) {
+                // collision width bar1
+                vx *= -1;
+                vy *= -1;
+            }
+
+            if (ball.x >= bar2.x && ball.x <= bar2.x + 10
+                && ball.y >= bar2.y && ball.y <= bar2.y + bar_height) {
+                // collision width bar2
+                vx *= -1;
+                vy *= -1;
+            }
+
+            // bounds
+            if (ball.y > game.canvas_height) {
+                vy = Math.random()*-2;
+            }
+            if (ball.y < 0) {
+                vy = Math.random()*2;
+            }
+
+        });
+
+        game.on("mousemove", function() {
+            bar1.y = game.mouse().y-bar_height/2;
+        });
+
+
+	</script>
+
+</body>
+</html>

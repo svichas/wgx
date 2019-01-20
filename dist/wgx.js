@@ -22,7 +22,8 @@ function () {
     this.tick_timer; // canvas height & width.
 
     this.canvas_width = canvas_width;
-    this.canvas_height = canvas_height; // mouse vars
+    this.canvas_height = canvas_height;
+    this.stroke_color = ""; // mouse vars
 
     this.mouse_position = this.vector(0, 0);
     this.canvas = document.createElement("canvas");
@@ -78,7 +79,7 @@ function () {
     key: "background",
     value: function background(color) {
       this.fill(color);
-      this.rect(0, 0, this.canvas_width, this.canvas_height);
+      this.context.fillRect(0, 0, this.canvas_width, this.canvas_height);
       return true;
     }
     /**
@@ -94,6 +95,15 @@ function () {
       return true;
     }
     /**
+    * Method stroke
+    */
+
+  }, {
+    key: "stroke",
+    value: function stroke(color) {
+      this.stroke_color = color;
+    }
+    /**
     * Method rect
     * creates a rectangle
     */
@@ -101,7 +111,31 @@ function () {
   }, {
     key: "rect",
     value: function rect(x, y, w, h) {
-      this.context.fillRect(x, y, w, h);
+      this.context.fillRect(x, y, w, h); // this.context.fill();
+
+      if (this.stroke_color) {
+        this.context.strokeStyle = this.stroke_color;
+        this.context.strokeRect(x, y, w, h);
+      }
+
+      return true;
+    }
+    /**
+    * Method circle
+    */
+
+  }, {
+    key: "circle",
+    value: function circle(x, y, radius) {
+      this.context.beginPath();
+      this.context.arc(x, y, radius, 0, 2 * Math.PI, false);
+      this.context.fill();
+
+      if (this.stroke_color) {
+        this.context.strokeStyle = this.stroke_color;
+        this.context.stroke();
+      }
+
       return true;
     }
     /**

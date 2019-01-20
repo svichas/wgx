@@ -15,11 +15,19 @@
 			objs = [];
 
 		game.tick(function() {
+
 			game.background("#000000");
+
 			for (i=0;i<objs.length;i++) {
 				objs[i].render();
 			}
+
 			game.image(player_image,x,y);
+
+			game.stroke("red");
+			game.fill("white");
+			game.rect(0,0,10,10);
+
 		});
 
 		game.keydown(function(key) {
@@ -37,11 +45,12 @@
 		class obj {
 			constructor(x,y) {
 				this.pos = game.vector(x,y);
-				this.w = 10;
+				this.r = 120;
 			}
 			render() {
-				game.fill("red");
-				game.rect(this.pos.x, this.pos.y, this.w, this.w);
+				game.stroke("#39CCCC");
+				game.fill("#0074D9");
+				game.circle(this.pos.x, this.pos.y, this.r);
 			}
 		}
 	</script>

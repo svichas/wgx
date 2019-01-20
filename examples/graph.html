@@ -23,10 +23,10 @@
 		});
 
 		game.keydown(function(key) {
-			if (key == 37) x--;
-			if (key == 39) x++;
-			if (key == 38) y--;
-			if (key == 40) y++;
+			if (key == 37) x-=10;
+			if (key == 39) x+=10;
+			if (key == 38) y-=10;
+			if (key == 40) y+=10;
 		});
 
 		game.on("click", function() {

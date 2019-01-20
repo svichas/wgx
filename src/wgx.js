@@ -174,6 +174,7 @@ class wgx {
 	_construct_canvas() {
 		this.canvas.width = this.canvas_width;
 		this.canvas.height = this.canvas_height;
+		this.canvas.className = "wgx_canvas";
 
 		document.body.appendChild(this.canvas)
 	}

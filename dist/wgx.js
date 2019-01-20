@@ -22,6 +22,11 @@ function () {
 
     this._construct_canvas();
   }
+  /**
+  * Method ticks
+  * ticks a callback every interval
+  */
+
 
   _createClass(wgx, [{
     key: "tick",
@@ -30,12 +35,23 @@ function () {
       this.tick_timer = setInterval(callback, tick_interval);
       return true;
     }
+    /**
+    * Method stopTick
+    * stops tick callback
+    */
+
   }, {
     key: "stopTick",
     value: function stopTick() {
       clearInterval(this.tick_timer);
       return true;
     }
+    /**
+    * Method background
+    * Sets a background color to canvas
+    * @param string color
+    */
+
   }, {
     key: "background",
     value: function background(color) {
@@ -43,18 +59,34 @@ function () {
       this.rect(0, 0, this.canvas_width, this.canvas_height);
       return true;
     }
+    /**
+    * Method fill
+    * Changes fill style
+    * @param string color
+    */
+
   }, {
     key: "fill",
     value: function fill(color) {
       this.context.fillStyle = color;
       return true;
     }
+    /**
+    * Method rect
+    * creates a rectangle
+    */
+
   }, {
     key: "rect",
     value: function rect(x, y, w, h) {
       this.context.fillRect(x, y, w, h);
       return true;
     }
+    /**
+    * Method keydown
+    * @param function callback
+    */
+
   }, {
     key: "keydown",
     value: function keydown(callback) {
@@ -63,6 +95,24 @@ function () {
       });
       return true;
     }
+    /**
+    * Method keyup
+    * @param function callback
+    */
+
+  }, {
+    key: "keyup",
+    value: function keyup(callback) {
+      document.addEventListener("keyup", function (e) {
+        callback(e.keyCode);
+      });
+      return true;
+    }
+    /**
+    * Method _construct_canvas
+    * Sets canvas width/height and adds it to the body.
+    */
+
   }, {
     key: "_construct_canvas",
     value: function _construct_canvas() {

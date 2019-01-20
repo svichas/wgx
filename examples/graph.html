@@ -7,16 +7,14 @@
 	<script type="text/javascript" src="../dist/wgx.js"></script>
 	<script type="text/javascript">
 
-		var game = new wgx(500,500);
+		var game = new wgx(500, 500);
 
 		var x = 0,
 			y = 0;
 
-
 		game.tick(function() {
 			game.background("#000000");
-			game.fill("red");
-			game.rect(x,y,50,50);
+			game.image("https://www.html5canvastutorials.com/demos/assets/darth-vader.jpg", x, y);
 		});
 
 		game.keydown(function(key) {

@@ -109,6 +109,21 @@ function () {
       return true;
     }
     /**
+    * Method image
+    * Loads an image
+    * @param string src
+    * @param function onload_callback
+    */
+
+  }, {
+    key: "image",
+    value: function image(src, onload_callback) {
+      var image_object = new Image();
+      image_object.src = src;
+      image_object.onload = onload_callback;
+      return image_object;
+    }
+    /**
     * Method _construct_canvas
     * Sets canvas width/height and adds it to the body.
     */

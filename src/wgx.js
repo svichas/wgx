@@ -44,8 +44,23 @@ class wgx {
 		return true;
 	}
 
+	/**
+	* Method keydown
+	* @param function callback
+	*/
 	keydown(callback) {
 		document.addEventListener("keydown", function(e) {
+			callback(e.keyCode);
+		});
+		return true;
+	}
+
+	/**
+	* Method keyup
+	* @param function callback
+	*/
+	keyup(callback) {
+		document.addEventListener("keyup", function(e) {
 			callback(e.keyCode);
 		});
 		return true;

@@ -6,6 +6,12 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+/**
+* wgx
+* Author: Stefanos Vichas
+* License: MIT
+* Project: https://github.com/svichas/wgx
+*/
 var wgx =
 /*#__PURE__*/
 function () {
@@ -16,19 +22,35 @@ function () {
     this.tick_timer; // canvas height & width.
 
     this.canvas_width = canvas_width;
-    this.canvas_height = canvas_height;
+    this.canvas_height = canvas_height; // mouse vars
+
+    this.mouse_position = this.vector(0, 0);
     this.canvas = document.createElement("canvas");
     this.context = this.canvas.getContext("2d");
 
     this._construct_canvas();
+
+    this._construct_mouse_listeners();
   }
   /**
-  * Method ticks
-  * ticks a callback every interval
+  * Method vector
   */
 
 
   _createClass(wgx, [{
+    key: "vector",
+    value: function vector(x, y) {
+      return {
+        x: x,
+        y: y
+      };
+    }
+    /**
+    * Method ticks
+    * ticks a callback every interval
+    */
+
+  }, {
     key: "tick",
     value: function tick(callback, tick_interval) {
       var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval;
@@ -83,6 +105,18 @@ function () {
       return true;
     }
     /**
+    * Method on
+    * Attach events to canvas
+    * @param string event
+    * @param function callback
+    */
+
+  }, {
+    key: "on",
+    value: function on(event, callback) {
+      return this.canvas.addEventListener(event, callback);
+    }
+    /**
     * Method keydown
     * @param function callback
     */
@@ -109,19 +143,63 @@ function () {
       return true;
     }
     /**
-    * Method image
+    * Method mousedown
+    * @return object
+    */
+
+  }, {
+    key: "mousedown",
+    value: function mousedown(callback) {
+      return this.canvas.addEventListener("mousedown", callback);
+    }
+    /**
+    * Method mouseup
+    * @return object
+    */
+
+  }, {
+    key: "mouseup",
+    value: function mouseup(callback) {
+      return this.canvas.addEventListener("mouseup", callback);
+    }
+    /**
+    * Method to get mouse position
+    * @return object
+    */
+
+  }, {
+    key: "mouse",
+    value: function mouse() {
+      return this.mouse_position;
+    }
+    /**
+    * Method loadImage
     * Loads an image
     * @param string src
     * @param function onload_callback
     */
 
   }, {
-    key: "image",
-    value: function image(src, onload_callback) {
+    key: "loadImage",
+    value: function loadImage(src, onload_callback) {
       var image_object = new Image();
       image_object.src = src;
       image_object.onload = onload_callback;
       return image_object;
+    }
+    /**
+    * Method image
+    * Displays an image
+    * @param object image_object
+    * @param int x
+    * @param int y
+    */
+
+  }, {
+    key: "image",
+    value: function image(image_object, x, y) {
+      this.context.drawImage(image_object, x, y);
+      return true;
     }
     /**
     * Method _construct_canvas
@@ -134,6 +212,16 @@ function () {
       this.canvas.width = this.canvas_width;
       this.canvas.height = this.canvas_height;
       document.body.appendChild(this.canvas);
+    }
+  }, {
+    key: "_construct_mouse_listeners",
+    value: function _construct_mouse_listeners() {
+      var _this = this;
+
+      this.canvas.addEventListener("mousemove", function (e) {
+        _this.mouse_position.x = e.clientX - _this.canvas.getBoundingClientRect().left;
+        _this.mouse_position.y = e.clientY - _this.canvas.getBoundingClientRect().top;
+      });
     }
   }]);
 

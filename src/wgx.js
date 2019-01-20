@@ -1,4 +1,9 @@
-
+/**
+* wgx
+* Author: Stefanos Vichas
+* License: MIT
+* Project: https://github.com/svichas/wgx
+*/
 
 class wgx {
 
@@ -11,10 +16,25 @@ class wgx {
 		this.canvas_width = canvas_width;
 		this.canvas_height = canvas_height;
 
+		// mouse vars
+		this.mouse_position = this.vector(0,0);
+
 		this.canvas = document.createElement("canvas");
 		this.context = this.canvas.getContext("2d");
 
 		this._construct_canvas();
+		this._construct_mouse_listeners();
+
+	}
+
+	/**
+	* Method vector
+	*/
+	vector(x,y) {
+		return {
+			x: x,
+			y: y
+		}
 	}
 
 	/**
@@ -67,6 +87,16 @@ class wgx {
 	}
 
 	/**
+	* Method on
+	* Attach events to canvas
+	* @param string event
+	* @param function callback
+	*/
+	on(event, callback) {
+		return this.canvas.addEventListener(event, callback);
+	}
+
+	/**
 	* Method keydown
 	* @param function callback
 	*/
@@ -89,16 +119,52 @@ class wgx {
 	}
 
 	/**
-	* Method image
+	* Method mousedown
+	* @return object
+	*/
+	mousedown(callback) {
+		return this.canvas.addEventListener("mousedown", callback);
+	}
+
+	/**
+	* Method mouseup
+	* @return object
+	*/
+	mouseup(callback) {
+		return this.canvas.addEventListener("mouseup", callback);
+	}
+
+	/**
+	* Method to get mouse position
+	* @return object
+	*/
+	mouse() {
+		return this.mouse_position;
+	}
+
+	/**
+	* Method loadImage
 	* Loads an image
 	* @param string src
 	* @param function onload_callback
 	*/
-	image(src, onload_callback) {
+	loadImage(src, onload_callback) {
 		var image_object = new Image();
 		image_object.src = src;
 		image_object.onload = onload_callback;
 		return image_object;
+	}
+
+	/**
+	* Method image
+	* Displays an image
+	* @param object image_object
+	* @param int x
+	* @param int y
+	*/
+	image(image_object, x, y) {
+		this.context.drawImage(image_object, x, y);
+		return true;
 	}
 
 	/**
@@ -110,5 +176,13 @@ class wgx {
 		this.canvas.height = this.canvas_height;
 
 		document.body.appendChild(this.canvas)
+	}
+
+	_construct_mouse_listeners() {
+		var _this = this;
+		this.canvas.addEventListener("mousemove", function(e) {
+			_this.mouse_position.x = e.clientX - _this.canvas.getBoundingClientRect().left;
+			_this.mouse_position.y = e.clientY - _this.canvas.getBoundingClientRect().top;
+		});
 	}
 }

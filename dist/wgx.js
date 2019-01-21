@@ -121,6 +121,29 @@ function () {
       return true;
     }
     /**
+    * Method text
+    * @param string text
+    * @param int x
+    * @param int y
+    */
+
+  }, {
+    key: "text",
+    value: function text(_text, x, y) {
+      this.context.fillText(_text, x, y);
+      return true;
+    }
+    /**
+    * Method font
+    * @param text
+    */
+
+  }, {
+    key: "font",
+    value: function font(text) {
+      this.context.font = text;
+    }
+    /**
     * Method circle
     */
 

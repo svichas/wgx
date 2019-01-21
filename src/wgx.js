@@ -104,6 +104,25 @@ class wgx {
 	}
 
 	/**
+	* Method text
+	* @param string text
+	* @param int x
+	* @param int y
+	*/
+	text(text, x, y) {
+		this.context.fillText(text, x, y);
+		return true;
+	}
+
+	/**
+	* Method font
+	* @param text
+	*/
+	font(text) {
+		this.context.font = text;
+	}
+	
+	/**
 	* Method circle
 	*/
 	circle(x, y, radius) {

@@ -11,14 +11,18 @@
 
         // ball
         var bar_height = 80;
-
         var ball = game.vector(game.canvas_width/2, game.canvas_height/2);
+
         var vx = -1,
-            vy = 1;
-        var speed = 5;
+            vy = 1,
+			speed = 7;
 
         var bar1 = game.vector(10, 0);
         var bar2 = game.vector(game.canvas_width-20, (game.canvas_height/2)-bar_height/2);
+
+		var bar1_score = 0,
+			bar2_score = 0;
+
 
         game.tick(function() {
 
@@ -26,14 +30,50 @@
 
             // draw bars
             game.fill("white");
-            game.rect(bar1.x, bar1.y, 10, bar_height);
+			game.stroke("blue");
+	        game.rect(bar1.x, bar1.y, 10, bar_height);
             game.rect(bar2.x, bar2.y, 10, bar_height);
+			game.stroke("");
+
+
+			// draw map
+			game.fill("white");
+			game.stroke("");
+			for (i=0;i<game.canvas_height/15;i++) {
+				if (i%2==0) {
+					game.rect(game.canvas_width/2, (game.canvas_height/15) * i, 10, game.canvas_height/15);
+				}
+			}
+
+
+			// draw score
+			game.fill("white");
+			game.font("18px Arial");
+
+			game.text(bar1_score, 10, 20);
+			game.text(bar2_score, game.canvas_width - 20, 20);
 
             game.fill("red");
             game.circle(ball.x, ball.y, 10);
 
+			// update ball position
             ball.x += speed * vx;
             ball.y += speed * vy;
+
+			// update score
+
+			if (ball.x <= 0) {
+				bar2_score++;
+				ball.x = game.canvas_width / 2;
+				ball.y = game.canvas_height / 2;
+				vx *= -1;
+			}
+			if (ball.x > game.canvas_width) {
+				bar1_score++;
+				ball.x = game.canvas_width / 2;
+				ball.y = game.canvas_height / 2;
+				vx *= -1;
+			}
 
             // collision
             if (ball.x >= bar1.x && ball.x <= bar1.x + 10
@@ -50,6 +90,16 @@
                 vy *= -1;
             }
 
+			// move bar2
+			var temp = speed/1.2;
+			if (ball.y > bar2.y + (bar_height / 2)) {
+				if (bar2.y + temp < game.canvas_height - bar_height)
+					bar2.y+=temp;
+			} else {
+				if (bar2.y - temp > 0)
+					bar2.y-=temp;
+			}
+
             // bounds
             if (ball.y > game.canvas_height) {
                 vy = Math.random()*-2;
@@ -61,7 +111,10 @@
         });
 
         game.on("mousemove", function() {
-            bar1.y = game.mouse().y-bar_height/2;
+			var bary = game.mouse().y-bar_height/2;
+			if (bary > 0 && bary < game.canvas_height - bar_height)
+            	bar1.y = bary;
+
         });
 
 

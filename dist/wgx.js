@@ -247,6 +247,25 @@ function () {
       return this.mouse_position;
     }
     /**
+    * Method random
+    * @param number1
+    * @param number2
+    */
+
+  }, {
+    key: "random",
+    value: function random(number1, number2) {
+      if (typeof number1 !== "undefined" && typeof number2 == "undefined") {
+        return Math.floor(Math.random() * (number1 + 1));
+      } else if (typeof number1 == "undefined" && typeof number2 == "undefined") {
+        return Math.random();
+      }
+
+      number1 = Math.ceil(number1);
+      number2 = Math.floor(number2);
+      return Math.floor(Math.random() * (number2 - number1 + 1)) + number1;
+    }
+    /**
     * Method loadImage
     * Loads an image
     * @param string src

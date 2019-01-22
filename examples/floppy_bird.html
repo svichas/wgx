@@ -20,26 +20,96 @@
 
 	<script type="text/javascript" src="../dist/wgx.js"></script>
 	<script type="text/javascript">
-		var game = new wgx(300, 550);
 
+		var game = new wgx(350, 550);
 
 		// game objects 
 		var bird = new Bird();
-		
+		var pipes = [];
+
 		game.tick(function() {
 			
 			game.background("black");
 
+			if (game.frame_count % 200 == 0) {
+				// add a pipe every x frames
+				pipes.push(new Pipe());
+			}
 
+			bird.update();
+			bird.render();
+
+			for (var i = 0;i<pipes.length;i++) {
+				pipes[i].update();
+				pipes[i].render();
+			}
 
 		});
 
 
+		game.keydown(function(key) {
+			if (key == 32) {
+				// pressed space
+				bird.jump();
+			}
+		});
+
 		function Bird() {
+
 			this.pos = game.vector(50, game.height/2);
+			this.width = 24;
+			this.height = 24;
+
+			this.gravity_rate = 8;
+
+			this.jumping = false;
+			this.jump_amount = 0;
+			this.jump_rate = 20;
+
+			this.update = function() {
+
+				if (this.jumping) {
+					if (this.jump_amount > 100) {
+						this.jumping = false;
+					}
+					this.jump_amount += this.jump_rate;
+					this.pos.y -= this.jump_rate;
+					this.jump_rate *= 1.2;
+					if (this.jump_rate > 10) this.jump_rate = 10;
+				} else {
+					this.pos.y += this.gravity_rate;
+				}
+
+			}
+
+			this.render = function() {
+				game.fill("white");
+				game.rect(this.pos.x, this.pos.y, this.width, this.height);
+			}
+
+			this.jump = function() {
+				if (this.jumping) return;
+				this.jumping = true;
+				this.jump_amount = 0;
+				this.jump_rate = 5;
+			}
+
+		}
+
+
+		function Pipe() {
+
+			this.pos = game.width;
+			this.width = 40;
+
 			this.update = function() {
 
 			}
+
+			this.render = function() {
+
+			}
+
 		}
 
 	</script>

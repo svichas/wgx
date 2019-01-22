@@ -13,8 +13,10 @@ class wgx {
 		this.tick_timer;
 
 		// canvas height & width.
-		this.canvas_width = canvas_width;
-		this.canvas_height = canvas_height;
+		this.width = canvas_width;
+		this.height = canvas_height;
+
+		this.frame_count = 0;
 
 		this.stroke_color = "";
 
@@ -45,7 +47,11 @@ class wgx {
 	*/
 	tick(callback, tick_interval) {
 		var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval;
-		this.tick_timer = setInterval(callback, tick_interval);
+		var $this = this;
+		this.tick_timer = setInterval(function() {
+			$this.frame_count++;
+			callback();
+		}, tick_interval);
 		return true;
 	}
 
@@ -65,7 +71,7 @@ class wgx {
 	*/
 	background(color) {
 		this.fill(color);
-		this.context.fillRect(0, 0, this.canvas_width, this.canvas_height);
+		this.context.fillRect(0, 0, this.width, this.height);
 		return true;
 	}
 
@@ -235,8 +241,8 @@ class wgx {
 	* Sets canvas width/height and adds it to the body.
 	*/
 	_construct_canvas() {
-		this.canvas.width = this.canvas_width;
-		this.canvas.height = this.canvas_height;
+		this.canvas.width = this.width;
+		this.canvas.height = this.height;
 		this.canvas.className = "wgx_canvas";
 
 		document.body.appendChild(this.canvas)

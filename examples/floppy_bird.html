@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Floppy bird</title>
+	<style type="text/css">
+		body {
+			text-align: center;
+			font-family: Arial;
+		}
+		h1 {
+			margin: 0 0 10px 0;
+			font-size: 32px;
+			color: #333;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Floppy bird</h1>
+
+	<script type="text/javascript" src="../dist/wgx.js"></script>
+	<script type="text/javascript">
+		var game = new wgx(300, 550);
+
+
+		// game objects 
+		var bird = new Bird();
+		
+		game.tick(function() {
+			
+			game.background("black");
+
+
+
+		});
+
+
+		function Bird() {
+			this.pos = game.vector(50, game.height/2);
+			this.update = function() {
+
+			}
+		}
+
+	</script>
+
+</body>
+</html>

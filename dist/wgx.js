@@ -21,8 +21,9 @@ function () {
     this.tick_interval = 1000 / 30;
     this.tick_timer; // canvas height & width.
 
-    this.canvas_width = canvas_width;
-    this.canvas_height = canvas_height;
+    this.width = canvas_width;
+    this.height = canvas_height;
+    this.frame_count = 0;
     this.stroke_color = ""; // mouse vars
 
     this.mouse_position = this.vector(0, 0);
@@ -55,7 +56,11 @@ function () {
     key: "tick",
     value: function tick(callback, tick_interval) {
       var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval;
-      this.tick_timer = setInterval(callback, tick_interval);
+      var $this = this;
+      this.tick_timer = setInterval(function () {
+        $this.frame_count++;
+        callback();
+      }, tick_interval);
       return true;
     }
     /**
@@ -79,7 +84,7 @@ function () {
     key: "background",
     value: function background(color) {
       this.fill(color);
-      this.context.fillRect(0, 0, this.canvas_width, this.canvas_height);
+      this.context.fillRect(0, 0, this.width, this.height);
       return true;
     }
     /**
@@ -278,8 +283,8 @@ function () {
   }, {
     key: "_construct_canvas",
     value: function _construct_canvas() {
-      this.canvas.width = this.canvas_width;
-      this.canvas.height = this.canvas_height;
+      this.canvas.width = this.width;
+      this.canvas.height = this.height;
       this.canvas.className = "wgx_canvas";
       document.body.appendChild(this.canvas);
     }

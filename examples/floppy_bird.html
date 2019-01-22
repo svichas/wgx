@@ -26,12 +26,21 @@
 		// game objects 
 		var bird = new Bird();
 		var pipes = [];
+		var score = 0;
+		var gameover = false;
 
 		game.tick(function() {
 			
-			game.background("black");
+			game.background("#0074D9");
 
-			if (game.frame_count % 200 == 0) {
+			if (gameover) {
+				game.font("12px Arial");
+				game.fill("white");
+				game.text("Game is over, Score: "+score+". Press 'r' to replay.", 30, 50);
+				return;
+			}
+
+			if (game.frame_count % 90 == 0) {
 				// add a pipe every x frames
 				pipes.push(new Pipe());
 			}
@@ -42,7 +51,22 @@
 			for (var i = 0;i<pipes.length;i++) {
 				pipes[i].update();
 				pipes[i].render();
+
+
+				// collision with pipe
+				bird.collision(pipes[i]);
+
+				if (pipes[i].pos+pipes[i].width < 0) {
+					pipes.splice(i, 1); // remove pipe
+					score++;
+				}
+
 			}
+
+
+			game.font("30px Arial");
+			game.fill("white");
+			game.text("SCORE: " + score, 30, 50);
 
 		});
 
@@ -51,6 +75,13 @@
 			if (key == 32) {
 				// pressed space
 				bird.jump();
+			}
+			if (key == 82) {
+				// pressed r
+				score = 0;
+				pipes = [];
+				bird.pos.y = game.height/2;
+				gameover = false;
 			}
 		});
 
@@ -69,17 +100,18 @@
 			this.update = function() {
 
 				if (this.jumping) {
-					if (this.jump_amount > 100) {
+					if (this.jump_amount > 100 || this.pos.y < 0) {
 						this.jumping = false;
 					}
 					this.jump_amount += this.jump_rate;
 					this.pos.y -= this.jump_rate;
 					this.jump_rate *= 1.2;
-					if (this.jump_rate > 10) this.jump_rate = 10;
+					if (this.jump_rate > 15) this.jump_rate = 15;
 				} else {
 					this.pos.y += this.gravity_rate;
 				}
 
+				if (this.pos.y + this.height > game.height) gameover = true;
 			}
 
 			this.render = function() {
@@ -94,20 +126,41 @@
 				this.jump_rate = 5;
 			}
 
+			this.collision = function(pipe) {
+				
+				if (this.pos.y >= 0 && this.pos.y <= pipe.height
+					&& this.pos.x+this.width >= pipe.pos && this.pos.x+this.width<= pipe.pos + pipe.width) {
+					// collision with upper pipe
+					gameover = true;
+				}
+
+				if (this.pos.y >= pipe.height+pipe.cap && this.pos.y <= game.height
+					&& this.pos.x+this.width >= pipe.pos && this.pos.x+this.width<= pipe.pos + pipe.width) {
+					// collision with upper pipe
+					gameover = true;
+				}
+
+			}
+
 		}
 
 
 		function Pipe() {
 
 			this.pos = game.width;
-			this.width = 40;
+			this.width = 60;
+			this.height = game.random(50, game.height/2);
+			this.move_rate = 5;
+			this.cap = 150;
 
 			this.update = function() {
-
+				this.pos -= this.move_rate;
 			}
 
 			this.render = function() {
-
+				game.fill("#B10DC9");
+				game.rect(this.pos, 0, this.width, this.height);
+				game.rect(this.pos, this.height+this.cap, this.width, game.height-this.height+this.cap);
 			}
 
 		}

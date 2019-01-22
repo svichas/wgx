@@ -121,7 +121,17 @@ class wgx {
 	font(text) {
 		this.context.font = text;
 	}
-	
+
+	/**
+	* Method point
+	* @param int x
+	* @param int y
+	*/
+	point(x,y) {
+		this.rect(x,y,1,1);
+		return true;
+	}
+
 	/**
 	* Method circle
 	*/

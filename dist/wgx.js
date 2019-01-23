@@ -55,10 +55,11 @@ function () {
   }, {
     key: "tick",
     value: function tick(callback, tick_interval) {
-      var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval;
-      var $this = this;
+      var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval,
+          _this = this;
+
       this.tick_timer = setInterval(function () {
-        $this.frame_count++;
+        _this.frame_count++;
         callback();
       }, tick_interval);
       return true;

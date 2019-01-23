@@ -46,12 +46,15 @@ class wgx {
 	* ticks a callback every interval
 	*/
 	tick(callback, tick_interval) {
-		var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval;
-		var $this = this;
+
+		var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval,
+		 	_this = this;
+
 		this.tick_timer = setInterval(function() {
-			$this.frame_count++;
+			_this.frame_count++;
 			callback();
 		}, tick_interval);
+		
 		return true;
 	}
 
@@ -218,13 +221,12 @@ class wgx {
 	*/
 	random(number1, number2) {
 
-		
 		if (typeof number1 !== "undefined" && typeof number2 == "undefined") {
 			return Math.floor(Math.random() * (number1+1));
 		} else if (typeof number1 == "undefined" && typeof number2 == "undefined") {
 			return Math.random()
 		}
-		
+
 		number1 = Math.ceil(number1);
 		number2 = Math.floor(number2);
 

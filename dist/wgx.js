@@ -83,10 +83,20 @@ function () {
       this.tick_timer = setInterval(function () {
         _this.frame_count++; // reseting transform
 
-        _this.context.setTransform(1, 0, 0, 1, 0, 0);
+        _this.resetTransform();
 
         callback();
       }, tick_interval);
+      return true;
+    }
+    /**
+    * Method reset transform
+    */
+
+  }, {
+    key: "resetTransform",
+    value: function resetTransform() {
+      this.context.setTransform(1, 0, 0, 1, 0, 0);
       return true;
     }
     /**

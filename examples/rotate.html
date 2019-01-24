@@ -8,12 +8,19 @@
 	<script type="text/javascript">
 
 		var game = new wgx(500, 500);
-
+		var rot = 0;
 		game.tick(function() {
+			rot++;
 			game.background("#000000");
+
 			game.translate(game.mouse.x,game.mouse.y);
+			// game.rotate(rot);
 			game.fill("#ffffff");
 			game.rect(0,0,60,60);
+			
+			game.translate(game.mouse.x,game.mouse.y);
+			game.rect(60,60,60,60);
+
 		});
 
 	</script>

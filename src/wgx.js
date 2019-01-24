@@ -45,8 +45,6 @@ class wgx {
 	* Method translate
 	*/
 	translate(x,y) {
-		// reseting translate
-		this.context.setTransform(1, 0, 0, 1, 0, 0);
 		// setting translate
 		this.context.translate(x,y);
 		return this;
@@ -71,7 +69,12 @@ class wgx {
 		 	_this = this;
 
 		this.tick_timer = setInterval(function() {
+
 			_this.frame_count++;
+
+			// reseting transform
+			_this.context.setTransform(1, 0, 0, 1, 0, 0);
+
 			callback();
 		}, tick_interval);
 

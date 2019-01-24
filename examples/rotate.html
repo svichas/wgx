@@ -9,21 +9,12 @@
 
 		var game = new wgx(500, 500);
 
-
-
-
 		game.tick(function() {
-
-			game.background("black");
-
-			game.translate(game.mouse.x, game.mouse.y);
-
-			game.fill("white");
-			game.rect(0,0,100,50);
-
+			game.background("#000000");
+			game.translate(game.mouse.x,game.mouse.y);
+			game.fill("#ffffff");
+			game.rect(0,0,60,60);
 		});
-
-
 
 	</script>
 

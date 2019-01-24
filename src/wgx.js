@@ -45,6 +45,9 @@ class wgx {
 	* Method translate
 	*/
 	translate(x,y) {
+		// reseting translate
+		this.context.setTransform(1, 0, 0, 1, 0, 0);
+		// setting translate
 		this.context.translate(x,y);
 		return this;
 	}

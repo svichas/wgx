@@ -23,14 +23,14 @@
 
 		var game = new wgx(350, 550);
 
-		// game objects 
+		// game objects
 		var bird = new Bird();
 		var pipes = [];
 		var score = 0;
 		var gameover = false;
 
 		game.tick(function() {
-			
+
 			game.background("#0074D9");
 
 			if (gameover) {
@@ -127,7 +127,7 @@
 			}
 
 			this.collision = function(pipe) {
-				
+
 				if (this.pos.y >= 0 && this.pos.y <= pipe.height
 					&& this.pos.x+this.width >= pipe.pos && this.pos.x+this.width<= pipe.pos + pipe.width) {
 					// collision with upper pipe

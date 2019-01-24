@@ -26,7 +26,7 @@ function () {
     this.frame_count = 0;
     this.stroke_color = ""; // mouse vars
 
-    this.mouse_position = this.vector(0, 0);
+    this.mouse = this.vector(0, 0);
     this.canvas = document.createElement("canvas");
     this.context = this.canvas.getContext("2d");
 
@@ -46,6 +46,27 @@ function () {
         x: x,
         y: y
       };
+    }
+    /**
+    * Method translate
+    */
+
+  }, {
+    key: "translate",
+    value: function translate(x, y) {
+      this.context.translate(x, y);
+      return this;
+    }
+    /**
+    * Method rotate
+    * @param int degrees
+    */
+
+  }, {
+    key: "rotate",
+    value: function rotate(degrees) {
+      this.context.rotate(degrees * Math.PI / 180);
+      return this;
     }
     /**
     * Method ticks
@@ -84,6 +105,7 @@ function () {
   }, {
     key: "background",
     value: function background(color) {
+      this.translate(0, 0);
       this.fill(color);
       this.context.fillRect(0, 0, this.width, this.height);
       return true;
@@ -238,16 +260,6 @@ function () {
       return this.canvas.addEventListener("mouseup", callback);
     }
     /**
-    * Method to get mouse position
-    * @return object
-    */
-
-  }, {
-    key: "mouse",
-    value: function mouse() {
-      return this.mouse_position;
-    }
-    /**
     * Method random
     * @param number1
     * @param number2
@@ -314,8 +326,8 @@ function () {
       var _this = this;
 
       this.canvas.addEventListener("mousemove", function (e) {
-        _this.mouse_position.x = e.clientX - _this.canvas.getBoundingClientRect().left;
-        _this.mouse_position.y = e.clientY - _this.canvas.getBoundingClientRect().top;
+        _this.mouse.x = e.clientX - _this.canvas.getBoundingClientRect().left;
+        _this.mouse.y = e.clientY - _this.canvas.getBoundingClientRect().top;
       });
     }
   }]);

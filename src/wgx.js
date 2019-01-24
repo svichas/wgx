@@ -21,7 +21,7 @@ class wgx {
 		this.stroke_color = "";
 
 		// mouse vars
-		this.mouse_position = this.vector(0,0);
+		this.mouse = this.vector(0,0);
 
 		this.canvas = document.createElement("canvas");
 		this.context = this.canvas.getContext("2d");
@@ -42,6 +42,23 @@ class wgx {
 	}
 
 	/**
+	* Method translate
+	*/
+	translate(x,y) {
+		this.context.translate(x,y);
+		return this;
+	}
+
+	/**
+	* Method rotate
+	* @param int degrees
+	*/
+	rotate(degrees) {
+		this.context.rotate(degrees*Math.PI/180);
+		return this;
+	}
+
+	/**
 	* Method ticks
 	* ticks a callback every interval
 	*/
@@ -54,7 +71,7 @@ class wgx {
 			_this.frame_count++;
 			callback();
 		}, tick_interval);
-		
+
 		return true;
 	}
 
@@ -73,6 +90,9 @@ class wgx {
 	* @param string color
 	*/
 	background(color) {
+
+		this.translate(0,0);
+
 		this.fill(color);
 		this.context.fillRect(0, 0, this.width, this.height);
 		return true;
@@ -207,14 +227,6 @@ class wgx {
 	}
 
 	/**
-	* Method to get mouse position
-	* @return object
-	*/
-	mouse() {
-		return this.mouse_position;
-	}
-
-	/**
 	* Method random
 	* @param number1
 	* @param number2
@@ -274,8 +286,8 @@ class wgx {
 	_construct_mouse_listeners() {
 		var _this = this;
 		this.canvas.addEventListener("mousemove", function(e) {
-			_this.mouse_position.x = e.clientX - _this.canvas.getBoundingClientRect().left;
-			_this.mouse_position.y = e.clientY - _this.canvas.getBoundingClientRect().top;
+			_this.mouse.x = e.clientX - _this.canvas.getBoundingClientRect().left;
+			_this.mouse.y = e.clientY - _this.canvas.getBoundingClientRect().top;
 		});
 	}
 }

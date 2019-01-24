@@ -25,7 +25,7 @@
 
 
         game.tick(function() {
-        	
+
             game.background("#000");
 
             // draw bars
@@ -111,7 +111,7 @@
         });
 
         game.on("mousemove", function() {
-			var bary = game.mouse().y-bar_height/2;
+			var bary = game.mouse.y-bar_height/2;
 			if (bary > 0 && bary < game.height - bar_height)
             	bar1.y = bary;
 

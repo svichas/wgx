@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Graph</title>
+</head>
+<body>
+	<script type="text/javascript" src="../dist/wgx.js"></script>
+	<script type="text/javascript">
+
+		var game = new wgx(500, 500);
+
+
+
+
+		game.tick(function() {
+
+			game.background("black");
+
+			game.translate(game.mouse.x, game.mouse.y);
+
+			game.fill("white");
+			game.rect(0,0,100,50);
+
+		});
+
+
+
+	</script>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ class wgx {
 
 		this.stroke_color = "";
 
-		// mouse vars
+		// mouse lets
 		this.mouse = this.vector(0,0);
 
 		this.canvas = document.createElement("canvas");
@@ -65,7 +65,7 @@ class wgx {
 	*/
 	tick(callback, tick_interval) {
 
-		var tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval,
+		let tick_interval = typeof tick_interval != "undefined" ? tick_interval : this.tick_interval,
 		 	_this = this;
 
 		this.tick_timer = setInterval(function() {
@@ -267,7 +267,7 @@ class wgx {
 	* @param function onload_callback
 	*/
 	loadImage(src, onload_callback) {
-		var image_object = new Image();
+		let image_object = new Image();
 		image_object.src = src;
 		image_object.onload = onload_callback;
 		return image_object;
@@ -298,7 +298,7 @@ class wgx {
 	}
 
 	_construct_mouse_listeners() {
-		var _this = this;
+		let _this = this;
 		this.canvas.addEventListener("mousemove", function(e) {
 			_this.mouse.x = e.clientX - _this.canvas.getBoundingClientRect().left;
 			_this.mouse.y = e.clientY - _this.canvas.getBoundingClientRect().top;
